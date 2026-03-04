@@ -42,7 +42,7 @@ public class ContestRepository(AppDbContext db) : IContestRepository
         await db.Contests.FindAsync(id);
 
     public async Task<Contest?> GetByExternalIdAsync(string externalId, string platform) =>
-        await db.Contests.FirstOrDefaultAsync(c => c.ExternalId == externalId && c.Platform == platform);
+        await db.Contests.AsNoTracking().FirstOrDefaultAsync(c => c.ExternalId == externalId && c.Platform == platform);
 
     public async Task AddAsync(Contest contest) =>
         await db.Contests.AddAsync(contest);
