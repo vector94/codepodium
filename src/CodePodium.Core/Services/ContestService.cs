@@ -11,7 +11,11 @@ public class ContestService(IContestRepository contestRepository, IEnumerable<IC
         {
             var contests = await fetcher.FetchContestsAsync();
             foreach (var contest in contests)
-                await contestRepository.AddAsync(contest);
+            {
+                var existing = await contestRepository.GetByExternalIdAsync(contest.ExternalId, contest.Platform);
+                if (existing is null)
+                    await contestRepository.AddAsync(contest);
+            }
         }
         await contestRepository.SaveChangesAsync();
     }
