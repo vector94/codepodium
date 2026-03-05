@@ -40,4 +40,28 @@ public class ContestServiceTests
 
         await _repo.Received(1).AddAsync(contest);
     }
+
+    [Fact]
+    public async Task GetUpcomingContestsAsync_ReturnsOnlyUpcomingContests()
+    {
+        var upcoming = new List<Contest>
+        {
+            new() { Id = 1, Name = "Round 1", StartTime = DateTime.UtcNow.AddHours(2), EndTime = DateTime.UtcNow.AddHours(4) }
+        };
+        _repo.GetUpcomingAsync().Returns(upcoming);
+
+        var result = await _sut.GetUpcomingContestsAsync();
+
+        Assert.Single(result);
+    }
+
+    [Fact]
+    public async Task GetContestsByPlatformAsync_DelegatesToRepository()
+    {
+        _repo.GetByPlatformAsync("Codeforces").Returns(new List<Contest>());
+
+        await _sut.GetContestsByPlatformAsync("Codeforces");
+
+        await _repo.Received(1).GetByPlatformAsync("Codeforces");
+    }
 }
