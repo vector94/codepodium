@@ -78,3 +78,15 @@ public class ContestApiTests(TestWebAppFactory factory) : IClassFixture<TestWebA
         Assert.All(items!, c => Assert.Equal("LeetCode", c.Platform));
     }
 }
+
+public class SyncApiTests(TestWebAppFactory factory) : IClassFixture<TestWebAppFactory>
+{
+    private readonly HttpClient _client = factory.CreateClient();
+
+    [Fact]
+    public async Task PostSync_ReturnsOk()
+    {
+        var response = await _client.PostAsync("/api/contests/sync", null);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+}
