@@ -119,7 +119,7 @@ export default function ContestsPage() {
       {loading ? (
         <p className="text-gray-500">Loading...</p>
       ) : contests.length === 0 ? (
-        <p className="text-gray-500">No contests found. Try syncing or adjusting filters.</p>
+        <p className="text-gray-500 italic">No contests found. Try syncing or adjusting filters.</p>
       ) : (
         <>
           <div className="grid gap-4">
