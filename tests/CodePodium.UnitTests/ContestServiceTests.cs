@@ -64,4 +64,15 @@ public class ContestServiceTests
 
         await _repo.Received(1).GetByPlatformAsync("Codeforces");
     }
+
+    [Fact]
+    public async Task GetPagedContestsAsync_PassesSearchTermToRepository()
+    {
+        _repo.GetPagedAsync(null, "codeforces", 1, 20)
+            .Returns((new List<Contest>(), 0));
+
+        await _sut.GetPagedContestsAsync(null, "codeforces", 1, 20);
+
+        await _repo.Received(1).GetPagedAsync(null, "codeforces", 1, 20);
+    }
 }
