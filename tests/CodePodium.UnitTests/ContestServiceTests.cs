@@ -75,4 +75,14 @@ public class ContestServiceTests
 
         await _repo.Received(1).GetPagedAsync(null, "codeforces", 1, 20);
     }
+
+    [Fact]
+    public async Task GetStatsAsync_DelegatesToRepository()
+    {
+        _repo.GetStatsAsync().Returns(new ContestStats());
+
+        await _sut.GetStatsAsync();
+
+        await _repo.Received(1).GetStatsAsync();
+    }
 }
