@@ -34,4 +34,7 @@ public class ContestService(IContestRepository contestRepository, IEnumerable<IC
 
     public Task<Contest?> GetContestByIdAsync(int id) =>
         contestRepository.GetByIdAsync(id);
+
+    public Task<ContestStats> GetStatsAsync() =>
+        contestRepository.GetStatsAsync();
 }

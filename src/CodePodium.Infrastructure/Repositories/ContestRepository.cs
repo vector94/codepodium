@@ -51,4 +51,18 @@ public class ContestRepository(AppDbContext db) : IContestRepository
 
     public async Task SaveChangesAsync() =>
         await db.SaveChangesAsync();
+
+    public async Task<ContestStats> GetStatsAsync()
+    {
+        var now = DateTime.UtcNow;
+        var contests = await db.Contests.ToListAsync();
+        return new ContestStats
+        {
+            Total = contests.Count,
+            Upcoming = contests.Count(c => c.StartTime > now),
+            Ongoing = contests.Count(c => c.StartTime <= now && c.EndTime > now),
+            Finished = contests.Count(c => c.EndTime <= now),
+            ByPlatform = contests.GroupBy(c => c.Platform).ToDictionary(g => g.Key, g => g.Count()),
+        };
+    }
 }

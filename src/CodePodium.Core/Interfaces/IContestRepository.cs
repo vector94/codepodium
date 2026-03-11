@@ -12,4 +12,5 @@ public interface IContestRepository
     Task<Contest?> GetByExternalIdAsync(string externalId, string platform);
     Task AddAsync(Contest contest);
     Task SaveChangesAsync();
+    Task<ContestStats> GetStatsAsync();
 }
