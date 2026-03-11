@@ -7,11 +7,13 @@ namespace CodePodium.Infrastructure.Repositories;
 
 public class ContestRepository(AppDbContext db) : IContestRepository
 {
-    public async Task<(IEnumerable<Contest> Items, int TotalCount)> GetPagedAsync(string? platform, int page, int pageSize)
+    public async Task<(IEnumerable<Contest> Items, int TotalCount)> GetPagedAsync(string? platform, string? search, int page, int pageSize)
     {
         var query = db.Contests.AsQueryable();
         if (!string.IsNullOrEmpty(platform))
             query = query.Where(c => c.Platform == platform);
+        if (!string.IsNullOrEmpty(search))
+            query = query.Where(c => c.Name.ToLower().Contains(search.ToLower()));
 
         var total = await query.CountAsync();
         var items = await query

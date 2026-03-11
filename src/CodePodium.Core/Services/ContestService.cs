@@ -20,8 +20,8 @@ public class ContestService(IContestRepository contestRepository, IEnumerable<IC
         await contestRepository.SaveChangesAsync();
     }
 
-    public Task<(IEnumerable<Contest> Items, int TotalCount)> GetPagedContestsAsync(string? platform, int page, int pageSize) =>
-        contestRepository.GetPagedAsync(platform, page, pageSize);
+    public Task<(IEnumerable<Contest> Items, int TotalCount)> GetPagedContestsAsync(string? platform, string? search, int page, int pageSize) =>
+        contestRepository.GetPagedAsync(platform, search, page, pageSize);
 
     public Task<IEnumerable<Contest>> GetAllContestsAsync() =>
         contestRepository.GetAllAsync();
