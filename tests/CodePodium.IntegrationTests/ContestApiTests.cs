@@ -77,6 +77,21 @@ public class ContestApiTests(TestWebAppFactory factory) : IClassFixture<TestWebA
         Assert.NotNull(items);
         Assert.All(items!, c => Assert.Equal("LeetCode", c.Platform));
     }
+
+    [Fact]
+    public async Task GetContests_SearchByName_ReturnsMatchingContests()
+    {
+        await SeedContestAsync("search-1", "Codeforces", "Codeforces Round 900");
+        await SeedContestAsync("search-2", "LeetCode", "Weekly Contest 400");
+
+        var response = await _client.GetAsync("/api/contests?search=Round");
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        var json = await response.Content.ReadFromJsonAsync<JsonElement>(JsonOpts);
+        var items = json.GetProperty("items").Deserialize<List<Contest>>(JsonOpts);
+        Assert.NotNull(items);
+        Assert.All(items!, c => Assert.Contains("Round", c.Name));
+    }
 }
 
 public class SyncApiTests(TestWebAppFactory factory) : IClassFixture<TestWebAppFactory>
