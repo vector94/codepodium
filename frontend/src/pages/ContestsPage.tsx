@@ -45,6 +45,7 @@ export default function ContestsPage() {
 
   const handlePlatform = (p: string) => {
     setPlatform(p);
+    setSearch("");
     setPage(1);
   };
 
