@@ -10,10 +10,11 @@ public class ContestsController(ContestService contestService) : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll(
         [FromQuery] string? platform,
+        [FromQuery] string? search,
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 20)
     {
-        var (items, total) = await contestService.GetPagedContestsAsync(platform, page, pageSize);
+        var (items, total) = await contestService.GetPagedContestsAsync(platform, search, page, pageSize);
         return Ok(new { items, total, page, pageSize });
     }
 
