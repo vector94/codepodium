@@ -35,4 +35,8 @@ public class ContestsController(ContestService contestService) : ControllerBase
         await contestService.SyncContestsAsync();
         return Ok(new { message = "Sync completed." });
     }
+
+    [HttpGet("stats")]
+    public async Task<IActionResult> GetStats() =>
+        Ok(await contestService.GetStatsAsync());
 }
