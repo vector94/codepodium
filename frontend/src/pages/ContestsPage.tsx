@@ -84,9 +84,9 @@ export default function ContestsPage() {
             { label: "Ongoing", value: stats.ongoing },
             { label: "Finished", value: stats.finished },
           ].map(({ label, value }) => (
-            <div key={label} className="bg-white border border-gray-200 rounded-xl p-4 text-center">
-              <p className="text-2xl font-bold text-indigo-600">{value}</p>
-              <p className="text-xs text-gray-500 mt-1">{label}</p>
+            <div key={label} className="bg-white border border-gray-200 rounded-xl p-4 text-center shadow-sm">
+              <p className="text-3xl font-bold text-indigo-600">{value}</p>
+              <p className="text-xs font-medium text-gray-500 mt-1 uppercase tracking-wide">{label}</p>
             </div>
           ))}
         </div>
