@@ -105,3 +105,24 @@ public class SyncApiTests(TestWebAppFactory factory) : IClassFixture<TestWebAppF
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 }
+
+public class StatsApiTests(TestWebAppFactory factory) : IClassFixture<TestWebAppFactory>
+{
+    private readonly HttpClient _client = factory.CreateClient();
+    private static readonly JsonSerializerOptions JsonOpts = new(JsonSerializerDefaults.Web);
+
+    [Fact]
+    public async Task GetStats_ReturnsOk()
+    {
+        var response = await _client.GetAsync("/api/contests/stats");
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetStats_ReturnsTotalCount()
+    {
+        var response = await _client.GetAsync("/api/contests/stats");
+        var json = await response.Content.ReadFromJsonAsync<JsonElement>(JsonOpts);
+        Assert.True(json.TryGetProperty("total", out _));
+    }
+}
