@@ -25,7 +25,7 @@ jobs:
         run: dotnet build --no-restore --configuration Release
 
       - name: Run unit tests
-        run: dotnet test tests/CodePodium.UnitTests --no-build --configuration Release --verbosity normal
+        run: dotnet test tests/CodePodium.UnitTests/CodePodium.UnitTests.csproj --no-build --configuration Release --verbosity normal
 
       - name: Run integration tests
-        run: dotnet test tests/CodePodium.IntegrationTests --no-build --configuration Release --verbosity normal
+        run: dotnet test tests/CodePodium.IntegrationTests/CodePodium.IntegrationTests.csproj --no-build --configuration Release --verbosity normal
