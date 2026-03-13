@@ -19,6 +19,7 @@ export default function ContestsPage() {
   const [loading, setLoading] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [stats, setStats] = useState<ContestStats | null>(null);
+  const [lastSynced, setLastSynced] = useState<Date | null>(null);
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
@@ -60,6 +61,7 @@ export default function ContestsPage() {
     await load(platform, debouncedSearch, page);
     const updated = await getStats();
     setStats(updated);
+    setLastSynced(new Date());
     setSyncing(false);
   };
 
@@ -67,6 +69,12 @@ export default function ContestsPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Contests</h1>
+        <div className="flex items-center gap-3">
+          {lastSynced && (
+            <span className="text-xs text-gray-400">
+              Last synced: {lastSynced.toLocaleTimeString()}
+            </span>
+          )}
         <button
           onClick={handleSync}
           disabled={syncing}
@@ -74,6 +82,7 @@ export default function ContestsPage() {
         >
           {syncing ? "Syncing..." : "Sync Now"}
         </button>
+        </div>
       </div>
 
       {stats && (
