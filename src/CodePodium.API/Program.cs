@@ -6,10 +6,13 @@ using CodePodium.Infrastructure.ExternalApi.Clist;
 using CodePodium.Infrastructure.ExternalApi.LeetCode;
 using CodePodium.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddCors(o => o.AddDefaultPolicy(p =>
     p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
@@ -51,6 +54,8 @@ using (var scope = app.Services.CreateScope())
 
 app.UseCors();
 app.UseHttpsRedirection();
+app.UseSwagger();
+app.MapScalarApiReference(options => options.WithOpenApiRoutePattern("/swagger/v1/swagger.json"));
 app.MapControllers();
 app.Run();
 
