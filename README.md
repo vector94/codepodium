@@ -2,6 +2,8 @@
 
 A programming contest aggregator that pulls contests from Codeforces and LeetCode, with search and real-time statistics.
 
+> **Live Demo:** [https://codepodium-sgk3.onrender.com](https://codepodium-sgk3.onrender.com)
+
 ## Features
 
 - Browse and filter contests by platform (Codeforces, LeetCode)
